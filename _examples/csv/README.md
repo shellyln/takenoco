@@ -13,7 +13,7 @@ import (
 
 func main() {
     data, err := csv.Parse("a,b,c\n1,2,3") // [][]string
-	if err != nil {
+    if err != nil {
         log.Fatal(err)
     }
 
@@ -31,16 +31,16 @@ import (
 )
 
 type Foobar struct {
-	XFoo string `csv:"Foo"`
-	Bar  string
-	XBaz int `csv:"Baz"`
+    XFoo string `csv:"Foo"`
+    Bar  string
+    XBaz int `csv:"Baz"`
 }
 
 func main() {
-	data := []Foobar{}
+    data := []Foobar{}
 
     err := csv.Unmarshal(&data, "Foo,Bar,Baz\n1,2,3") // [][]string
-	if err != nil {
+    if err != nil {
         log.Fatal(err)
     }
 
@@ -58,9 +58,9 @@ import (
 )
 
 type Foobar struct {
-	XFoo string `csv:"Foo"`
-	Bar  string
-	XBaz int `csv:"Baz"`
+    XFoo string `csv:"Foo"`
+    Bar  string
+    XBaz int `csv:"Baz"`
 }
 
 func main() {
@@ -78,7 +78,7 @@ func main() {
     }
 
     csv, err := csv.Marshal([]string{"Foo", "Bar", "Baz"}, data) // string
-	if err != nil {
+    if err != nil {
         log.Fatal(err)
     }
 
