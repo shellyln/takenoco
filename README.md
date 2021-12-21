@@ -2,7 +2,7 @@
 
 A parser combinator library for Go.
 
-<img src="_assets/logo-go-takenoco.svg" alt="logo" style="width:250px;" width="250">
+<img src="https://raw.githubusercontent.com/shellyln/takenoco/master/_assets/logo-go-takenoco.svg" alt="logo" style="width:250px;" width="250">
 
 
 ---
