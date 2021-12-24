@@ -6,7 +6,7 @@ package main
 import (
 	"syscall/js"
 
-	csv "github.com/shellyln/takenoco/_examples/csv"
+	"github.com/shellyln/takenoco/_examples/csv"
 )
 
 func parseCsv(this js.Value, args []js.Value) interface{} {

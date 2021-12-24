@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	csv "github.com/shellyln/takenoco/_examples/csv"
+	"github.com/shellyln/takenoco/_examples/csv"
 )
 
 func main() {
