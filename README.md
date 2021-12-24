@@ -1,4 +1,4 @@
-# Takenoco
+# 🎋 Takenoco
 
 A parser combinator library for Go.
 
@@ -8,13 +8,13 @@ A parser combinator library for Go.
 ---
 
 
-## Examples
+## 👋 Examples
 
 * [CSV parser](https://github.com/shellyln/takenoco/tree/master/_examples/csv)
 * [Dust - toy scripting language](https://github.com/shellyln/dust-lang)
 
 
-## Usage
+## 🚀 Getting started
 
 ### Define the parser:
 
@@ -190,7 +190,7 @@ func main() {
 ```
 
 
-## License
+## ⚖️ License
 
 MIT  
 Copyright (c) 2021 Shellyl_N and Authors.
