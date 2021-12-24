@@ -70,7 +70,7 @@ REVISION := $(shell git rev-parse --short HEAD)
 LDFLAGS  := -ldflags="-s -w -buildid= -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -extldflags \"-static\""
 
 
-.PHONY: printenv clean tidy test lint
+.PHONY: printenv clean tidy test lint wasm fatwasm
 all: clean test build
 
 
@@ -153,14 +153,14 @@ wasm: export GOOS:=js
 wasm: export GOARCH:=wasm
 wasm: export GOCMD:=go
 wasm:
-	$(TINYGOCMD) build -tags wasm -o web/go.wasm ./cmd/wasm
+	$(TINYGOCMD) build -tags wasm -o web/go.wasm ./wasm
 
 
 fatwasm: export GOOS:=js
 fatwasm: export GOARCH:=wasm
 fatwasm: export GOCMD:=go
 fatwasm:
-	$(GOCMD) build -tags wasm -o web/go.wasm ./cmd/wasm
+	$(GOCMD) build -tags wasm -o web/go.wasm ./wasm
 
 
 docker:

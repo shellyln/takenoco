@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script src="wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("go.wasm"), go.importObject).then((result) => {
+            go.run(result.instance);
+
+            // NOTE: TinyGo can export symbols.
+            globalThis.goWasmExports = result.instance.exports;
+        });
+    </script>
+</head>
+<body>
+    <h1>Go WebAssembly</h1>
+    <div>
+        <form>
+            <textarea id="csv" name="csv" rows="5" cols="33"
+>0,1,2,3,4,5,6,7,8,9
+0,1,2,3,4,5,6,7,8,9</textarea>
+            <br>
+            <button onclick="
+                alert(JSON.stringify(parseCsv(document.forms[0].csv.value)));
+                return false;
+                ">Parse CSV</button>
+        </form>
+    </div>
+</body>
+</html>
