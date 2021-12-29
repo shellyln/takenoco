@@ -15,6 +15,9 @@ const (
 	LineBreak             = ":string:LineBreak"
 	Alpha                 = ":string:Alpha"
 	Number                = ":string:Number"
+	BinNumber             = ":string:BinNumber"
+	OctNumber             = ":string:OctNumber"
+	HexNumber             = ":string:HexNumber"
 	Alnum                 = ":string:Alnum"
 	WordBoundary          = ":string:WordBoundary"
 )

@@ -412,6 +412,87 @@ func Alnum() ParserFn {
 	})
 }
 
+// Character class of ASCII binary number characters.
+func BinNumber() ParserFn {
+	const ClassName = clsz.BinNumber
+	return LightBaseParser(ClassName, func(ctx ParserContext) (ParserContext, error) {
+		ctx.MatchStatus = MatchStatus_Unmatched
+
+		ch, length := utf8.DecodeRuneInString(ctx.Str[ctx.Position:])
+		if length == 0 {
+			return ctx, nil
+		}
+		s := string(ch)
+
+		if '0' <= ch && ch <= '1' {
+			ctx.AstStack = append(ctx.AstStack, Ast{
+				ClassName:      ClassName,
+				Type:           AstType_String,
+				Value:          s,
+				SourcePosition: ctx.SourcePosition,
+			})
+			ctx.Position += length
+			ctx.Length = length
+			ctx.MatchStatus = MatchStatus_Matched
+		}
+		return ctx, nil
+	})
+}
+
+// Character class of ASCII octal number characters.
+func OctNumber() ParserFn {
+	const ClassName = clsz.OctNumber
+	return LightBaseParser(ClassName, func(ctx ParserContext) (ParserContext, error) {
+		ctx.MatchStatus = MatchStatus_Unmatched
+
+		ch, length := utf8.DecodeRuneInString(ctx.Str[ctx.Position:])
+		if length == 0 {
+			return ctx, nil
+		}
+		s := string(ch)
+
+		if '0' <= ch && ch <= '7' {
+			ctx.AstStack = append(ctx.AstStack, Ast{
+				ClassName:      ClassName,
+				Type:           AstType_String,
+				Value:          s,
+				SourcePosition: ctx.SourcePosition,
+			})
+			ctx.Position += length
+			ctx.Length = length
+			ctx.MatchStatus = MatchStatus_Matched
+		}
+		return ctx, nil
+	})
+}
+
+// Character class of ASCII hex number characters.
+func HexNumber() ParserFn {
+	const ClassName = clsz.HexNumber
+	return LightBaseParser(ClassName, func(ctx ParserContext) (ParserContext, error) {
+		ctx.MatchStatus = MatchStatus_Unmatched
+
+		ch, length := utf8.DecodeRuneInString(ctx.Str[ctx.Position:])
+		if length == 0 {
+			return ctx, nil
+		}
+		s := string(ch)
+
+		if '0' <= ch && ch <= '7' || 'A' <= ch && ch <= 'F' || 'a' <= ch && ch <= 'f' {
+			ctx.AstStack = append(ctx.AstStack, Ast{
+				ClassName:      ClassName,
+				Type:           AstType_String,
+				Value:          s,
+				SourcePosition: ctx.SourcePosition,
+			})
+			ctx.Position += length
+			ctx.Length = length
+			ctx.MatchStatus = MatchStatus_Matched
+		}
+		return ctx, nil
+	})
+}
+
 // Zero-width assertion on a word boundary.
 func WordBoundary() ParserFn {
 	const ClassName = clsz.WordBoundary
