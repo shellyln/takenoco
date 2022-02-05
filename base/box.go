@@ -2,7 +2,7 @@ package parser
 
 import (
 	"reflect"
-	"unsafe"
+	// "unsafe"
 )
 
 // An interface that abstracts memory address.
@@ -22,7 +22,7 @@ type Box interface {
 	// Get value as []byte
 	GetBytes() []byte
 	// Get value as unsafe.Pointer
-	GetPointer() unsafe.Pointer
+	// GetPointer() unsafe.Pointer
 
 	// Set any
 	SetAny(v interface{})
@@ -39,7 +39,7 @@ type Box interface {
 	// Set []byte value
 	SetBytes(v []byte)
 	// Set unsafe.Pointer
-	SetPointer(v unsafe.Pointer)
+	// SetPointer(v unsafe.Pointer)
 
 	// Get a specified element that is associated to the index
 	Index(i int) Box
@@ -90,9 +90,9 @@ func (s ReflectionBox) GetBytes() []byte {
 }
 
 //
-func (s ReflectionBox) GetPointer() unsafe.Pointer {
-	return unsafe.Pointer(s.Val.Pointer())
-}
+// func (s ReflectionBox) GetPointer() unsafe.Pointer {
+// 	return unsafe.Pointer(s.Val.Pointer())  // TinyGo does not implement this function.
+// }
 
 //
 func (s ReflectionBox) SetAny(v interface{}) {
@@ -130,9 +130,9 @@ func (s ReflectionBox) SetBytes(v []byte) {
 }
 
 //
-func (s ReflectionBox) SetPointer(v unsafe.Pointer) {
-	s.Val.SetPointer(v)
-}
+// func (s ReflectionBox) SetPointer(v unsafe.Pointer) {
+// 	s.Val.SetPointer(v)  // TinyGo does not implement this function.
+// }
 
 //
 func (s ReflectionBox) Index(i int) Box {
@@ -191,9 +191,9 @@ func (s MapContainerReflectionBox) GetBytes() []byte {
 }
 
 //
-func (s MapContainerReflectionBox) GetPointer() unsafe.Pointer {
-	return unsafe.Pointer(s.Container.MapIndex(s.Key).Pointer())
-}
+// func (s MapContainerReflectionBox) GetPointer() unsafe.Pointer {
+// 	return unsafe.Pointer(s.Container.MapIndex(s.Key).Pointer())  // TinyGo does not implement this function.
+// }
 
 //
 func (s MapContainerReflectionBox) SetAny(v interface{}) {
@@ -231,9 +231,9 @@ func (s MapContainerReflectionBox) SetBytes(v []byte) {
 }
 
 //
-func (s MapContainerReflectionBox) SetPointer(v unsafe.Pointer) {
-	s.Container.SetMapIndex(s.Key, reflect.ValueOf(v))
-}
+// func (s MapContainerReflectionBox) SetPointer(v unsafe.Pointer) {
+// 	s.Container.SetMapIndex(s.Key, reflect.ValueOf(v))  // TinyGo does not implement this function.
+// }
 
 //
 func (s MapContainerReflectionBox) Index(i int) Box {
@@ -317,12 +317,12 @@ func (p *NotInitializedMapContainerReflectionBox) GetBytes() []byte {
 }
 
 //
-func (p *NotInitializedMapContainerReflectionBox) GetPointer() unsafe.Pointer {
-	if !p.Initialized {
-		panic(msgReferencedNonInitializedVariable)
-	}
-	return unsafe.Pointer(p.Container.MapIndex(p.Key).Pointer())
-}
+// func (p *NotInitializedMapContainerReflectionBox) GetPointer() unsafe.Pointer {
+// 	if !p.Initialized {
+// 		panic(msgReferencedNonInitializedVariable)
+// 	}
+// 	return unsafe.Pointer(p.Container.MapIndex(p.Key).Pointer())  // TinyGo does not implement this function.
+// }
 
 //
 func (p *NotInitializedMapContainerReflectionBox) SetAny(v interface{}) {
@@ -367,10 +367,10 @@ func (p *NotInitializedMapContainerReflectionBox) SetBytes(v []byte) {
 }
 
 //
-func (p *NotInitializedMapContainerReflectionBox) SetPointer(v unsafe.Pointer) {
-	p.Container.SetMapIndex(p.Key, reflect.ValueOf(v))
-	p.Initialized = true
-}
+// func (p *NotInitializedMapContainerReflectionBox) SetPointer(v unsafe.Pointer) {
+// 	p.Container.SetMapIndex(p.Key, reflect.ValueOf(v))  // TinyGo does not implement this function.
+// 	p.Initialized = true
+// }
 
 //
 func (p *NotInitializedMapContainerReflectionBox) Index(i int) Box {
