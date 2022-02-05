@@ -192,6 +192,29 @@ func main() {
 ```
 
 
+## 📦 Build example
+
+### Build to native executable
+
+```bash
+make
+```
+
+### Build to WebAssembly
+#### Windows prerequirements:
+
+```bash
+scoop install tinygo
+scoop install binaryen
+```
+
+#### Build:
+
+```bash
+make wasm
+```
+
+
 ## ⚖️ License
 
 MIT  
