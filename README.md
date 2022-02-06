@@ -192,21 +192,38 @@ func main() {
 ```
 
 
-## 📦 Build example
+## 📦 Build the example app
 
-### Build to native executable
+### 🔹 Build to native executable
 
 ```bash
 make
 ```
 
-### Build to WebAssembly
-#### Windows prerequirements:
+### 🔹 Build to WebAssembly (Go)
+
+```bash
+make fatwasm
+```
+
+### 🔹 Build to WebAssembly (TinyGo; experimental)
+#### 🪟 Windows prerequirements:
 
 ```bash
 scoop install tinygo
 scoop install binaryen
 ```
+* [https://tinygo.org/getting-started/install/windows/](https://tinygo.org/getting-started/install/windows/)
+* [https://github.com/tinygo-org/tinygo/issues/2601](https://github.com/tinygo-org/tinygo/issues/2601)
+* [https://github.com/WebAssembly/binaryen](https://github.com/WebAssembly/binaryen)
+
+#### 🐧 Linux prerequirements:
+
+* [https://tinygo.org/getting-started/install/linux/](https://tinygo.org/getting-started/install/linux/)
+
+#### 🍎 Mac prerequirements:
+
+* [https://tinygo.org/getting-started/install/macos/](https://tinygo.org/getting-started/install/macos/)
 
 #### Build:
 
