@@ -24,7 +24,7 @@ GOTIDY     := $(GOCMD) mod tidy
 GOCLEAN    := $(GOCMD) clean
 GOTEST     := $(GOCMD) test
 GOVET      := $(GOCMD) vet
-GOLINT     := $(GOPATH)/bin/golint -set_exit_status
+GOLINT     := $(GOPATH)/bin/staticcheck
 TINYGOCMD  := tinygo
 SRCS       :=
 TARGET_CLI := ./
@@ -116,6 +116,8 @@ cover:
 lint:
 	@echo "Run go vet..."
 	$(GOVET) ./...
+	@echo "Run staticcheck..."
+	$(GOLINT) ./...
 
 
 $(BIN_CLI): export CGO_ENABLED:=0
