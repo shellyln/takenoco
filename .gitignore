@@ -19,3 +19,4 @@ debug.log
 /app
 /app.exe
 /web/*.wasm
+/web/wasm_exec.js

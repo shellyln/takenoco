@@ -247,10 +247,8 @@
 
 			const timeOrigin = Date.now() - performance.now();
 			this.importObject = {
-				// https://github.com/tinygo-org/tinygo/releases/tag/v0.18.0
-				// wasi: upgrade WASI version to wasi_snapshot_preview1
 				wasi_snapshot_preview1: {
-					// https://github.com/bytecodealliance/wasmtime/blob/master/docs/WASI-api.md#__wasi_fd_write
+					// https://github.com/WebAssembly/WASI/blob/main/phases/snapshot/docs.md#fd_write
 					fd_write: function(fd, iovs_ptr, iovs_len, nwritten_ptr) {
 						let nwritten = 0;
 						if (fd == 1) {
@@ -258,6 +256,7 @@
 								let iov_ptr = iovs_ptr+iovs_i*8; // assuming wasm32
 								let ptr = mem().getUint32(iov_ptr + 0, true);
 								let len = mem().getUint32(iov_ptr + 4, true);
+								nwritten += len;
 								for (let i=0; i<len; i++) {
 									let c = mem().getUint8(ptr+i);
 									if (c == 13) { // CR
@@ -276,6 +275,22 @@
 							console.error('invalid file descriptor:', fd);
 						}
 						mem().setUint32(nwritten_ptr, nwritten, true);
+						return 0;
+					},
+					fd_close: () => 0,      // dummy
+					fd_fdstat_get: () => 0, // dummy
+					fd_seek: () => 0,       // dummy
+					"proc_exit": (code) => {
+						if (global.process) {
+							// Node.js
+							process.exit(code);
+						} else {
+							// Can't exit in a browser.
+							throw 'trying to exit with code ' + code;
+						}
+					},
+					random_get: (bufPtr, bufLen) => {
+						crypto.getRandomValues(loadSlice(bufPtr, bufLen));
 						return 0;
 					},
 				},
@@ -398,9 +413,9 @@
 					},
 
 					// func valueInstanceOf(v ref, t ref) bool
-					//"syscall/js.valueInstanceOf": (sp) => {
-					//	mem().setUint8(sp + 24, loadValue(sp + 8) instanceof loadValue(sp + 16));
-					//},
+					"syscall/js.valueInstanceOf": (v_addr, t_addr) => {
+ 						return loadValue(v_addr) instanceof loadValue(t_addr);
+					},
 
 					// func copyBytesToGo(dst []byte, src ref) (int, bool)
 					"syscall/js.copyBytesToGo": (ret_addr, dest_addr, dest_len, dest_cap, source_addr) => {
@@ -436,23 +451,6 @@
 						dst.set(toCopy);
 						setInt64(num_bytes_copied_addr, toCopy.length);
 						mem().setUint8(returned_status_addr, 1); // Return "ok" status
-					},
-
-					// https://github.com/tinygo-org/tinygo/issues/1140
-					// func finalizeRef(v ref)
-					"syscall/js.finalizeRef": (sp) => {
-						// Note: TinyGo does not support finalizers so this should never be
-						// called.
-						// :todo : this is copied from main Go wasm_exec
-						const id = mem().getUint32(sp + 8, true);
-						this._goRefCounts[id]--;
-						if (this._goRefCounts[id] === 0) {
-							const v = this._values[id];
-							this._values[id] = null;
-							this._ids.delete(v);
-							this._idPool.push(id);
-						}
-						// console.error('syscall/js.finalizeRef not implemented');
 					},
 				}
 			};
