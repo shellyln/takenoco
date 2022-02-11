@@ -1,5 +1,11 @@
 # Changelog
 
+# v0.0.4
+* Add date and datetime string parser.
+* Add wasm+node.js example.
+* Edit Makefile.
+* Edit README.
+
 # v0.0.3
 * Add staticcheck.conf.
 * Remove Box.GetPointer/SetPointer receivers.
