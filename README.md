@@ -2,6 +2,10 @@
 
 A parser combinator library for Go.
 
+[![Test](https://github.com/shellyln/takenoco/actions/workflows/test.yml/badge.svg)](https://github.com/shellyln/takenoco/actions/workflows/test.yml)
+[![release](https://img.shields.io/github/v/release/shellyln/takenoco)](https://github.com/shellyln/takenoco/releases)
+[![Go version](https://img.shields.io/github/go-mod/go-version/shellyln/takenoco)](https://github.com/shellyln/takenoco)
+
 <img src="https://raw.githubusercontent.com/shellyln/takenoco/master/_assets/logo-go-takenoco.svg" alt="logo" style="width:250px;" width="250">
 
 
