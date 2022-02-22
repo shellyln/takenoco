@@ -32,18 +32,17 @@ func BaseParser(
 	thereExists := false
 	rewind := false
 	qty := qtyOnce
-	if props != nil {
-		for _, p := range props {
-			switch w := p.(type) {
-			case Times:
-				qty = w
-			case Negative:
-				negative = true
-			case ThereExists:
-				thereExists = true
-			case Rewind:
-				rewind = true
-			}
+
+	for _, p := range props {
+		switch w := p.(type) {
+		case Times:
+			qty = w
+		case Negative:
+			negative = true
+		case ThereExists:
+			thereExists = true
+		case Rewind:
+			rewind = true
 		}
 	}
 
