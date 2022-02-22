@@ -1,5 +1,12 @@
 # Changelog
 
+# v0.0.5
+* Fix lint warning.
+* Edit lint settings.
+* Add function for error reporting.
+* Add CI configurations.
+* Edit README.
+
 # v0.0.4
 * Add date and datetime string parser.
 * Add wasm+node.js example.
