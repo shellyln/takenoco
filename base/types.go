@@ -26,6 +26,15 @@ type SourcePosition struct {
 	Length int `json:"len,omitempty"`
 }
 
+// Source position (for error reporting)
+type LineAndColPosition struct {
+	LineIndex int
+	Line      int
+	Col       int
+	Position  int
+	ErrSource string
+}
+
 // Match result status
 type MatchStatusType int
 
