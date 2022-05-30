@@ -153,14 +153,13 @@ xbuild: build ;
 
 wasm: export GOOS:=js
 wasm: export GOARCH:=wasm
-wasm: export GOCMD:=go
 wasm:
+	$(CP) "$(shell $(TINYGOCMD) env TINYGOROOT)/targets/wasm_exec.js" web/.
 	$(TINYGOCMD) build -tags wasm -o web/go.wasm ./wasm
 
 
 fatwasm: export GOOS:=js
 fatwasm: export GOARCH:=wasm
-fatwasm: export GOCMD:=go
 fatwasm:
 	$(CP) "$(shell $(GOCMD) env GOROOT)/misc/wasm/wasm_exec.js" web/.
 	$(GOCMD) build -tags wasm -o web/go.wasm ./wasm
