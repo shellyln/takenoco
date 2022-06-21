@@ -151,16 +151,16 @@ xbuild: export GOARM:=$(GOARM)
 xbuild: build ;
 
 
-wasm: export GOOS:=js
-wasm: export GOARCH:=wasm
-wasm:
+tinywasm: export GOOS:=js
+tinywasm: export GOARCH:=wasm
+tinywasm:
 	$(CP) "$(shell $(TINYGOCMD) env TINYGOROOT)/targets/wasm_exec.js" web/.
 	$(TINYGOCMD) build -tags wasm -o web/go.wasm ./wasm
 
 
-fatwasm: export GOOS:=js
-fatwasm: export GOARCH:=wasm
-fatwasm:
+wasm: export GOOS:=js
+wasm: export GOARCH:=wasm
+wasm:
 	$(CP) "$(shell $(GOCMD) env GOROOT)/misc/wasm/wasm_exec.js" web/.
 	$(GOCMD) build -tags wasm -o web/go.wasm ./wasm
 
