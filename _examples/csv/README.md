@@ -24,6 +24,8 @@ func main() {
 ### Unmarshal
 
 ```go
+package main
+
 import (
     "fmt"
     "log"
@@ -44,13 +46,15 @@ func main() {
         log.Fatal(err)
     }
 
-    fmt.Println("%v", data)
+    fmt.Println(data)
 }
 ```
 
 ### Marshal
 
 ```go
+package main
+
 import (
     "fmt"
     "log"
@@ -82,13 +86,15 @@ func main() {
         log.Fatal(err)
     }
 
-    fmt.Println("%v", csv)
+    fmt.Println(csv)
 }
 ```
 
 ### Convert to CSV
 
 ```go
+package main
+
 import (
     "fmt"
     "log"
@@ -100,6 +106,6 @@ func main() {
         {"a", "b", "c"},
     }
 
-    fmt.Println("%v", csv.ToCsv(data))
+    fmt.Println(csv.ToCsv(data))
 }
 ```
