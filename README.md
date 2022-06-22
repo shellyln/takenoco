@@ -195,6 +195,8 @@ func main() {
 }
 ```
 
+[Run on go playground](https://go.dev/play/p/in5o3Ucc3b0)
+
 
 ## 📦 Build the example app
 
