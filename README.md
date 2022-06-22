@@ -198,6 +198,17 @@ func main() {
 
 ## 📦 Build the example app
 
+#### 🪟 Windows prerequirements:
+
+```bash
+choco install make
+# or
+# scoop install make
+```
+* [https://chocolatey.org/](https://chocolatey.org/)
+* [https://scoop.sh/](https://scoop.sh/)
+
+
 ### 🔹 Build to native executable
 
 ```bash
@@ -207,7 +218,7 @@ make
 ### 🔹 Build to WebAssembly (Go)
 
 ```bash
-make fatwasm
+make wasm
 ```
 
 ### 🔹 Build to WebAssembly (TinyGo; experimental)
@@ -217,6 +228,7 @@ make fatwasm
 scoop install tinygo
 scoop install binaryen
 ```
+* [https://scoop.sh/](https://scoop.sh/)
 * [https://tinygo.org/getting-started/install/windows/](https://tinygo.org/getting-started/install/windows/)
 * [https://github.com/tinygo-org/tinygo/issues/2601](https://github.com/tinygo-org/tinygo/issues/2601)
 * [https://github.com/WebAssembly/binaryen](https://github.com/WebAssembly/binaryen)
@@ -232,7 +244,7 @@ scoop install binaryen
 #### Build:
 
 ```bash
-make wasm
+make tinywasm
 ```
 
 
