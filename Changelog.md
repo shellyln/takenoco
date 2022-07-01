@@ -1,6 +1,6 @@
 # Changelog
 
-# v0.0.6.alpha
+# v0.0.6
 * Add time string parser.
 * Fix wasm examples.
 * Remove bundled wasm_exec.js.
