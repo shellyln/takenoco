@@ -268,3 +268,51 @@ func DateTimeStr() ParserFn {
 		ChangeClassName(clsz.DateTimeStr),
 	)
 }
+
+// Parse the ISO 8601 time string.
+// (hh:mm , ... , hh:mm:ss.fffffffff)
+func TimeStr() ParserFn {
+	return Trans(
+		FlatGroup(
+			CharRange(RuneRange{Start: '0', End: '2'}),
+			CharRange(RuneRange{Start: '0', End: '9'}),
+			Seq(":"),
+			CharRange(RuneRange{Start: '0', End: '5'}),
+			CharRange(RuneRange{Start: '0', End: '9'}),
+			First(
+				FlatGroup(
+					Seq(":"),
+					CharRange(RuneRange{Start: '0', End: '6'}),
+					CharRange(RuneRange{Start: '0', End: '9'}),
+					First(
+						FlatGroup(
+							Seq("."),
+							Trans(
+								Repeat(Times{Min: 1, Max: 9}, // 3: milli, 6: micro, 9: nano
+									CharRange(RuneRange{Start: '0', End: '9'}),
+								),
+								Concat,
+								func(ctx ParserContext, asts AstSlice) (AstSlice, error) {
+									return AstSlice{{
+										Type:  AstType_String,
+										Value: (asts[len(asts)-1].Value.(string) + "000000000")[0:9],
+									}}, nil
+								},
+							),
+						),
+						Zero(Ast{
+							Type:  AstType_String,
+							Value: ".000000000",
+						}),
+					),
+				),
+				Zero(Ast{
+					Type:  AstType_String,
+					Value: ":00.000000000",
+				}),
+			),
+		),
+		Concat,
+		ChangeClassName(clsz.TimeStr),
+	)
+}

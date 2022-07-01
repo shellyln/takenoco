@@ -9,4 +9,5 @@ const (
 	NumericStr       = ":extra:NumericStr"
 	DateStr          = ":extra:DateStr"
 	DateTimeStr      = ":extra:DateTimeStr"
+	TimeStr          = ":extra:TimeStr"
 )

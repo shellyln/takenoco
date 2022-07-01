@@ -1,5 +1,11 @@
 # Changelog
 
+# v0.0.6.alpha
+* Add time string parser.
+* Fix wasm examples.
+* Remove bundled wasm_exec.js.
+* Fix README.
+
 # v0.0.5
 * Fix lint warning.
 * Edit lint settings.
