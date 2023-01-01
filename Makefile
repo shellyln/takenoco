@@ -1,38 +1,44 @@
 
-
-DEVNUL     := /dev/null
-DIRSEP     := /
-SEP        := :
-RM_F       := rm -f
-RM_RF      := rm -rf
-CP         := cp
-CP_FLAGS   :=
-CP_R       := cp -RT
-CP_R_FLAGS :=
-FINDFILE   := find . -type f -name
-WHICH      := which
-PRINTENV   := printenv
-GOOS       := linux
-GOARCH     := amd64
-GOARM      :=
-GOXOS      := darwin windows linux
-GOXARCH    := 386 amd64 arm
-GOXARM     := 7
-GOCMD      := go
-GOBUILD    := $(GOCMD) build
-GOTIDY     := $(GOCMD) mod tidy
-GOCLEAN    := $(GOCMD) clean
-GOTEST     := $(GOCMD) test
-GOVET      := $(GOCMD) vet
-GOLINT     := $(GOPATH)/bin/staticcheck
-TINYGOCMD  := tinygo
-SRCS       :=
-TARGET_CLI := ./
-BIN_CLI    := app
+DEVNUL      := /dev/null
+DIRSEP      := /
+SEP         := :
+RM_F        := rm -f
+RM_RF       := rm -rf
+CP          := cp
+CP_FLAGS    :=
+CP_R        := cp -RT
+CP_R_FLAGS  :=
+FINDFILE    := find . -type f -name
+WHICH       := which
+PRINTENV    := printenv
+GOXOS       := darwin
+GOXARCH     := arm64
+GOXARM      :=
+GOCMD       := go
+GOBUILD     := $(GOCMD) build
+GOTIDY      := $(GOCMD) mod tidy
+GOCLEAN     := $(GOCMD) clean
+GOTEST      := $(GOCMD) test
+GOVET       := $(GOCMD) vet
+GOLINT      := $(GOPATH)/bin/staticcheck
+TINYGOCMD   := tinygo
+SRCS        :=
+CLI_NAME    := app
+LIB_NAME    := lib
+TARGET_CLI  := ./
+TARGET_LIB  := ./lib
+TARGET_WASM := ./wasm
+BIN_CLI     := $(CLI_NAME)
+BIN_LIB     := $(LIB_NAME).a
+BIN_SO      := $(LIB_NAME).so
+BIN_WASM    := web/go.wasm
+DOCKER_IMG  := shellyln/takenoco
 
 
 ifeq ($(OS),Windows_NT)
-    BIN_CLI := $(BIN_CLI).exe
+    BIN_CLI := $(CLI_NAME).exe
+    BIN_LIB := $(LIB_NAME).a
+    BIN_SO  := $(LIB_NAME).dll
     ifeq ($(MSYSTEM),)
         SHELL      := cmd.exe
         DEVNUL     := NUL
@@ -44,7 +50,7 @@ ifeq ($(OS),Windows_NT)
         CP_FLAGS   := /Y
         CP_R       := xcopy
         CP_R_FLAGS := /E /I /Y
-        FINDFILE   := cmd.exe /C 'where /r . '
+        FINDFILE   := cmd.exe /C "where /r . "
         WHICH      := where
         PRINTENV   := set
     endif
@@ -67,10 +73,12 @@ endef
 SRCS     := $(call find_file,"*.go")
 VERSION  := $(shell git describe --tags --abbrev=0 2> $(DEVNUL) || echo "0.0.0-alpha.1")
 REVISION := $(shell git rev-parse --short HEAD)
-LDFLAGS  := -ldflags="-s -w -buildid= -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -extldflags \"-static\""
+
+LDFLAGS        := -ldflags="-s -w -buildid= -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -extldflags \"-static\""
+LDFLAGS_SHARED := -ldflags="-s -w -buildid= -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\""
 
 
-.PHONY: printenv clean tidy test lint wasm fatwasm
+.PHONY: printenv clean cleantest upgrade tidy test testinfo cover lint wasm tinywasm docker docker-test doc
 all: clean test build
 
 
@@ -81,24 +89,32 @@ printenv:
 	@echo DIRSEP     : "$(DIRSEP)"
 	@echo SEP        : "$(SEP)"
 	@echo WHICH GO   : $(shell $(WHICH) $(GOCMD))
-	@echo GOOS       : $(GOOS)
-	@echo GOARCH     : $(GOARCH)
-	@echo GOARM      : $(GOARM)
+	@echo GOXOS      : $(GOXOS)
+	@echo GOXARCH    : $(GOXARCH)
+	@echo GOXARM     : $(GOXARM)
 	@echo VERSION    : $(VERSION)
 	@echo REVISION   : $(REVISION)
 	@echo SRCS       : $(SRCS)
 	@echo LDFLAGS    : $(LDFLAGS)
 	@echo TARGET_CLI : $(TARGET_CLI)
 	@echo BIN_CLI    : $(BIN_CLI)
+	@echo BIN_LIB    : $(BIN_LIB)
+	@echo BIN_SO     : $(BIN_SO)
 
 
 clean:
 	$(GOCLEAN)
 	-$(RM_F) $(BIN_CLI)
+	-$(RM_F) $(BIN_LIB)
+	-$(RM_F) $(BIN_SO)
+	-$(RM_F) $(BIN_WASM)
 
 cleantest:
 	$(GOCLEAN) -testcache
 
+
+upgrade:
+	$(GOCMD) get -u && $(GOTIDY)
 
 tidy:
 	$(GOTIDY)
@@ -107,7 +123,7 @@ tidy:
 test:
 	$(GOTEST) ./...
 
-testinfo:
+test+info:
 	$(GOTEST) -gcflags=-m ./...
 
 cover:
@@ -139,38 +155,59 @@ $(BIN_CLI)_info: $(SRCS)
 
 build: $(BIN_CLI) ;
 
-
 quickbuild: $(BIN_CLI)_quick ;
 
-buildinfo: $(BIN_CLI)_info ;
+build+info: $(BIN_CLI)_info ;
 
 
-xbuild: export GOOS:=$(GOOS)
-xbuild: export GOARCH:=$(GOARCH)
-xbuild: export GOARM:=$(GOARM)
+xbuild: export GOOS:=$(GOXOS)
+xbuild: export GOARCH:=$(GOXARCH)
+xbuild: export GOARM:=$(GOXARM)
 xbuild: build ;
 
 
-tinywasm: export GOOS:=js
-tinywasm: export GOARCH:=wasm
-tinywasm:
-	$(CP) "$(shell $(TINYGOCMD) env TINYGOROOT)/targets/wasm_exec.js" web/.
-	$(TINYGOCMD) build -tags wasm -o web/go.wasm ./wasm
+buildlib:
+	$(GOBUILD) \
+	    -a -tags osusergo,netgo -installsuffix netgo \
+	    -trimpath \
+	    -buildmode=c-archive \
+	    $(LDFLAGS) \
+	    -o $(BIN_LIB) $(TARGET_LIB)
+
+builddylib:
+	$(GOBUILD) \
+	    -a -tags osusergo,netgo -installsuffix netgo \
+	    -trimpath \
+	    -buildmode=c-shared \
+	    $(LDFLAGS_SHARED) \
+	    -o $(BIN_SO) $(TARGET_LIB)
 
 
 wasm: export GOOS:=js
 wasm: export GOARCH:=wasm
 wasm:
 	$(CP) "$(shell $(GOCMD) env GOROOT)/misc/wasm/wasm_exec.js" web/.
-	$(GOCMD) build -tags wasm -o web/go.wasm ./wasm
+	$(GOBUILD) \
+	    -a -tags wasm \
+	    -trimpath \
+	    $(LDFLAGS) \
+	    -o $(BIN_WASM) $(TARGET_WASM)
+
+
+tinywasm: export GOOS:=js
+tinywasm: export GOARCH:=wasm
+tinywasm:
+	$(CP) "$(shell $(TINYGOCMD) env TINYGOROOT)/targets/wasm_exec.js" web/.
+	$(TINYGOCMD) build \
+	    -tags wasm \
+	    -o $(BIN_WASM) $(TARGET_WASM)
 
 
 docker:
-	docker build -t shellyln/takenoco:$(VERSION) .
-
+	docker build -t $(DOCKER_IMG):$(VERSION) .
 
 docker-test:
-	docker build -t shellyln/takenoco:rev-$(REVISION) .
+	docker build -t $(DOCKER_IMG):rev-$(REVISION) .
 
 
 doc:

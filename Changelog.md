@@ -1,5 +1,9 @@
 # Changelog
 
+# v0.0.7
+* Update Makefile.
+* Fix README.
+
 # v0.0.6
 * Add time string parser.
 * Fix wasm examples.
