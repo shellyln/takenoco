@@ -78,7 +78,7 @@ LDFLAGS        := -ldflags="-s -w -buildid= -X \"main.Version=$(VERSION)\" -X \"
 LDFLAGS_SHARED := -ldflags="-s -w -buildid= -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\""
 
 
-.PHONY: printenv clean cleantest upgrade tidy test testinfo cover lint wasm tinywasm docker docker-test doc
+.PHONY: printenv clean cleantest upgrade tidy test test+info cover lint buildlib builddylib wasm tinywasm docker docker-test doc
 all: clean test build
 
 
