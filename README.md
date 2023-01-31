@@ -1,6 +1,7 @@
 # 🎋 Takenoco
 
-A parser combinator library for Go.
+Parser Combinator Library for Go.  
+A framework for making easy use of parser combinators and production rules.
 
 [![Test](https://github.com/shellyln/takenoco/actions/workflows/test.yml/badge.svg)](https://github.com/shellyln/takenoco/actions/workflows/test.yml)
 [![release](https://img.shields.io/github/v/release/shellyln/takenoco)](https://github.com/shellyln/takenoco/releases)
