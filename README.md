@@ -16,6 +16,7 @@ A framework for making easy use of parser combinators and production rules.
 ## 👋 Examples
 
 * [CSV parser](https://github.com/shellyln/takenoco/tree/master/_examples/csv)
+* [Formula parser](https://github.com/shellyln/takenoco/tree/master/_examples/formula)
 * [Dust - toy scripting language](https://github.com/shellyln/dust-lang)
     * [Parsers](https://github.com/shellyln/dust-lang/tree/master/scripting/parser)
     * [Production rules](https://github.com/shellyln/dust-lang/tree/master/scripting/rules)

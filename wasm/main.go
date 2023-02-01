@@ -7,6 +7,7 @@ import (
 	"syscall/js"
 
 	"github.com/shellyln/takenoco/_examples/csv"
+	"github.com/shellyln/takenoco/_examples/formula"
 )
 
 func parseCsv(this js.Value, args []js.Value) interface{} {
@@ -36,6 +37,20 @@ func parseCsv(this js.Value, args []js.Value) interface{} {
 	return rows
 }
 
+func parseFormula(this js.Value, args []js.Value) interface{} {
+	src := ""
+	if 0 < len(args) {
+		src = args[0].String()
+	}
+
+	data, err := formula.Parse(src)
+	if err != nil {
+		println(err)
+	}
+
+	return data
+}
+
 //export parseCsvWithTinyGo
 func parseCsvWithTinyGo(src string) [][]string {
 	// https://tinygo.org/docs/guides/webassembly/
@@ -54,6 +69,9 @@ func main() {
 
 	// for golang/go
 	js.Global().Set("parseCsv", js.FuncOf(parseCsv))
+
+	// for golang/go
+	js.Global().Set("parseFormula", js.FuncOf(parseFormula))
 
 	// for golang/go
 	<-ch

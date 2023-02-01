@@ -10,7 +10,7 @@ package main
 import (
     "fmt"
     "log"
-    csv "github.com/shellyln/takenoco/_examples/csv"
+    "github.com/shellyln/takenoco/_examples/csv"
 )
 
 func main() {
@@ -31,7 +31,7 @@ package main
 import (
     "fmt"
     "log"
-    csv "github.com/shellyln/takenoco/_examples/csv"
+    "github.com/shellyln/takenoco/_examples/csv"
 )
 
 type Foobar struct {
@@ -60,7 +60,7 @@ package main
 import (
     "fmt"
     "log"
-    csv "github.com/shellyln/takenoco/_examples/csv"
+    "github.com/shellyln/takenoco/_examples/csv"
 )
 
 type Foobar struct {
@@ -100,7 +100,7 @@ package main
 import (
     "fmt"
     "log"
-    csv "github.com/shellyln/takenoco/_examples/csv"
+    "github.com/shellyln/takenoco/_examples/csv"
 )
 
 func main() {
