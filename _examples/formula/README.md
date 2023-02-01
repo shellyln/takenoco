@@ -17,6 +17,6 @@ func main() {
         log.Fatal(err)
     }
 
-    fmt.Println("%v", data)
+    fmt.Println(data)
 }
 ```
