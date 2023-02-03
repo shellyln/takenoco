@@ -41,7 +41,7 @@ func number() ParserFn {
 				return nil, err
 			}
 			asts = AstSlice{{
-				OpCode:    AstOpCodeType(AstType_Int),
+				Type:      AstType_Int,
 				ClassName: "Number",
 				Value:     v,
 			}}
