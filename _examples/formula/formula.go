@@ -24,7 +24,7 @@ func erase(fn ParserFn) ParserFn {
 
 // Whitespaces
 func sp0() ParserFn {
-	return erase(ZeroOrMoreTimes(WhitespaceNoLineBreak()))
+	return erase(ZeroOrMoreTimes(Whitespace()))
 }
 
 // Integer number operand
