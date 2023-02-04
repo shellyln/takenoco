@@ -122,6 +122,8 @@ tidy:
 
 test:
 	$(GOTEST) ./...
+	$(GOTEST) ./_examples/csv/...
+	$(GOTEST) ./_examples/formula/...
 
 test+info:
 	$(GOTEST) -gcflags=-m ./...
@@ -200,6 +202,7 @@ tinywasm:
 	$(CP) "$(shell $(TINYGOCMD) env TINYGOROOT)/targets/wasm_exec.js" web/.
 	$(TINYGOCMD) build \
 	    -tags wasm \
+	    -no-debug \
 	    -o $(BIN_WASM) $(TARGET_WASM)
 
 

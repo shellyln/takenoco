@@ -1,6 +1,7 @@
 package csv_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -24,6 +25,10 @@ func runMatrixParse(t *testing.T, tests []testMatrixItem) {
 			got, err := Parse(tt.args.s)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Parse() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if err != nil {
+				fmt.Println(err.Error())
 				return
 			}
 

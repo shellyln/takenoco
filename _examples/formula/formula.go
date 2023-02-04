@@ -151,8 +151,7 @@ func Parse(s string) (int64, error) {
 			err.Error() +
 				"\n --> Line " + strconv.Itoa(pos.Line) +
 				", Col " + strconv.Itoa(pos.Col) + "\n" +
-				pos.ErrSource,
-		)
+				pos.ErrSource)
 	}
 
 	if out.MatchStatus == MatchStatus_Matched {
@@ -164,6 +163,5 @@ func Parse(s string) (int64, error) {
 				"\n --> Line " + strconv.Itoa(pos.Line) +
 				", Col " + strconv.Itoa(pos.Col) + "\n" +
 				pos.ErrSource)
-
 	}
 }

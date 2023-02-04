@@ -130,12 +130,22 @@ func document() ParserFn {
 func Parse(s string) ([][]string, error) {
 	out, err := documentParser(*NewStringParserContext(s))
 	if err != nil {
-		return nil, err
+		pos := GetLineAndColPosition(s, out.SourcePosition, 4)
+		return nil, errors.New(
+			err.Error() +
+				"\n --> Line " + strconv.Itoa(pos.Line) +
+				", Col " + strconv.Itoa(pos.Col) + "\n" +
+				pos.ErrSource)
+	}
+
+	if out.MatchStatus == MatchStatus_Matched {
+		return out.AstStack[0].Value.([][]string), nil
 	} else {
-		if out.MatchStatus == MatchStatus_Matched {
-			return out.AstStack[0].Value.([][]string), nil
-		} else {
-			return nil, errors.New("Parse failed at " + strconv.Itoa(out.SourcePosition.Position))
-		}
+		pos := GetLineAndColPosition(s, out.SourcePosition, 4)
+		return nil, errors.New(
+			"Parse failed" +
+				"\n --> Line " + strconv.Itoa(pos.Line) +
+				", Col " + strconv.Itoa(pos.Col) + "\n" +
+				pos.ErrSource)
 	}
 }
