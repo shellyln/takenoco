@@ -1,5 +1,8 @@
 # Changelog
 
+# v0.0.9
+* Fix `string.HexNumber`
+
 # v0.0.8
 * Add parsers to the extra package:
   * `AsciiIdentifierStr`

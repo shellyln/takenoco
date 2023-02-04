@@ -478,7 +478,7 @@ func HexNumber() ParserFn {
 		}
 		s := string(ch)
 
-		if '0' <= ch && ch <= '7' || 'A' <= ch && ch <= 'F' || 'a' <= ch && ch <= 'f' {
+		if '0' <= ch && ch <= '9' || 'A' <= ch && ch <= 'F' || 'a' <= ch && ch <= 'f' {
 			ctx.AstStack = append(ctx.AstStack, Ast{
 				ClassName:      ClassName,
 				Type:           AstType_String,
