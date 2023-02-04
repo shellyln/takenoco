@@ -253,6 +253,7 @@ func UnicodeWordBoundary() ParserFn {
 			return ctx, nil
 		}
 
+		// Finds the UTF-8 leading byte of the previous character.
 		var prevCh rune
 		var prevChLength int
 		for i := ctx.Position - 1; 0 <= i; i-- {
