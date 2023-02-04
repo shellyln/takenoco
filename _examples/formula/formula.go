@@ -32,7 +32,7 @@ func number() ParserFn {
 	return Trans(
 		FlatGroup(
 			extra.IntegerNumberStr(),
-			erase(WordBoundary()),
+			WordBoundary(),
 			erase(sp0()),
 		),
 		func(ctx ParserContext, asts AstSlice) (AstSlice, error) {

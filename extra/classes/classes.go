@@ -7,6 +7,7 @@ const (
 	IntegerNumberStr = ":extra:IntegerNumberStr"
 	FloatNumberStr   = ":extra:FloatNumberStr"
 	NumericStr       = ":extra:NumericStr"
+	IdentifierStr    = ":extra:IdentifierStr"
 	DateStr          = ":extra:DateStr"
 	DateTimeStr      = ":extra:DateTimeStr"
 	TimeStr          = ":extra:TimeStr"

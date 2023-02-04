@@ -1,5 +1,12 @@
 # Changelog
 
+# v0.0.8
+* Add parsers to the extra package.
+  * `AsciiIdentifierStr`
+  * `UnicodeIdentifierStr`
+* Fix formula example.
+* Fix README.
+
 # v0.0.7
 * Update Makefile.
 * Fix README.

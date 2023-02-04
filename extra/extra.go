@@ -1,6 +1,8 @@
 package extra
 
 import (
+	"unicode"
+
 	. "github.com/shellyln/takenoco/base"
 	clsz "github.com/shellyln/takenoco/extra/classes"
 	. "github.com/shellyln/takenoco/string"
@@ -172,6 +174,64 @@ func NumericStr() ParserFn {
 		),
 		Concat,
 		ChangeClassName(clsz.NumericStr),
+	)
+}
+
+// Parse the ASCII identifier
+func AsciiIdentifierStr() ParserFn {
+	return Trans(
+		FlatGroup(
+			Once(First(
+				Alpha(),
+				CharClass("_", "$"),
+			)),
+			ZeroOrMoreTimes(First(
+				Alnum(),
+				CharClass("_", "$"),
+			)),
+		),
+		Concat,
+		ChangeClassName(clsz.IdentifierStr),
+	)
+}
+
+// Parse the Unicode identifier
+func UnicodeIdentifierStr() ParserFn {
+	return Trans(
+		FlatGroup(
+			Once(First(
+				// ID_Start + '_' + '$'
+				CharClass("_", "$"),
+				CharClassFn(func(c rune) bool {
+					// ID_Start: Alpha(), and ...
+					return (unicode.Is(unicode.L, c) ||
+						unicode.Is(unicode.Nl, c) ||
+						unicode.Is(unicode.Other_ID_Start, c)) &&
+						!unicode.Is(unicode.Pattern_Syntax, c) &&
+						!unicode.Is(unicode.Pattern_White_Space, c)
+				}),
+			)),
+			ZeroOrMoreTimes(First(
+				// ID_Continue + '$' + U+200C + U+200D
+				CharClass("$"),
+				CharClassFn(func(c rune) bool {
+					// Alnum(), '_', and ...
+					return (unicode.Is(unicode.L, c) ||
+						unicode.Is(unicode.Nl, c) ||
+						unicode.Is(unicode.Other_ID_Start, c) ||
+						unicode.Is(unicode.Mn, c) ||
+						unicode.Is(unicode.Mc, c) ||
+						unicode.Is(unicode.Nd, c) ||
+						unicode.Is(unicode.Pc, c) ||
+						unicode.Is(unicode.Other_ID_Continue, c) ||
+						c == 0x0200c || c == 0x0200d) &&
+						!unicode.Is(unicode.Pattern_Syntax, c) &&
+						!unicode.Is(unicode.Pattern_White_Space, c)
+				}),
+			)),
+		),
+		Concat,
+		ChangeClassName(clsz.IdentifierStr),
 	)
 }
 
