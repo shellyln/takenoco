@@ -2,10 +2,12 @@ package extra
 
 import (
 	"unicode"
+	"unicode/utf8"
 
 	. "github.com/shellyln/takenoco/base"
 	clsz "github.com/shellyln/takenoco/extra/classes"
 	. "github.com/shellyln/takenoco/string"
+	strclsz "github.com/shellyln/takenoco/string/classes"
 )
 
 // Exclude parsed ASTs from the results.
@@ -233,6 +235,48 @@ func UnicodeIdentifierStr() ParserFn {
 		Concat,
 		ChangeClassName(clsz.IdentifierStr),
 	)
+}
+
+// Zero-width assertion on a word boundary.
+func UnicodeWordBoundary() ParserFn {
+	const ClassName = strclsz.WordBoundary
+	return LightBaseParser(ClassName, func(ctx ParserContext) (ParserContext, error) {
+		ctx.Length = 0
+		ctx.MatchStatus = MatchStatus_Unmatched
+
+		ch, length := utf8.DecodeRuneInString(ctx.Str[ctx.Position:])
+
+		if ctx.Position == 0 {
+			if 0 < length && isUnicodeWord(ch) {
+				ctx.MatchStatus = MatchStatus_Matched
+			}
+			return ctx, nil
+		}
+
+		var prevCh rune
+		var prevChLength int
+		for i := ctx.Position - 1; 0 <= i; i-- {
+			b := ctx.Str[i]
+			if b <= 0x7f || 0xc2 <= b && b <= 0xf0 || b == 0xf3 {
+				prevCh, prevChLength = utf8.DecodeRuneInString(ctx.Str[i:])
+				break
+			}
+		}
+
+		if ctx.Position == len(ctx.Str) {
+			if 0 < prevChLength && isUnicodeWord(prevCh) {
+				ctx.MatchStatus = MatchStatus_Matched
+			}
+		} else {
+			if length != 0 && prevChLength != 0 {
+				if isUnicodeWord(prevCh) && !isUnicodeWord(ch) || !isUnicodeWord(prevCh) && isUnicodeWord(ch) {
+					ctx.MatchStatus = MatchStatus_Matched
+				}
+			}
+		}
+
+		return ctx, nil
+	})
 }
 
 // Parse the ISO 8601 date string. (yyyy-MM-dd)

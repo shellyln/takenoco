@@ -35,7 +35,7 @@ func isLineBreak(r rune) bool {
 
 // ASCII word characters
 func isWord(r rune) bool {
-	if 'A' <= r && r <= 'Z' || 'a' <= r && r <= 'z' || '0' <= r && r <= '9' || r == '_' {
+	if 'A' <= r && r <= 'Z' || 'a' <= r && r <= 'z' || '0' <= r && r <= '9' || r == '_' || r == '$' {
 		return true
 	} else {
 		return false

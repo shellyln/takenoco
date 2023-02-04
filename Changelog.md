@@ -1,9 +1,13 @@
 # Changelog
 
 # v0.0.8
-* Add parsers to the extra package.
+* Add parsers to the extra package:
   * `AsciiIdentifierStr`
   * `UnicodeIdentifierStr`
+  * `UnicodeWordBoundary`
+* Fix `string.WordBoundary`:
+  * Add `$` to the word boundary character.
+* Fix staticcheck warnings.
 * Fix formula example.
 * Fix README.
 

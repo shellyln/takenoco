@@ -513,7 +513,7 @@ func WordBoundary() ParserFn {
 		var prevChLength int
 		for i := ctx.Position - 1; 0 <= i; i-- {
 			b := ctx.Str[i]
-			if 0x00 <= b && b <= 0x7f || 0xc2 <= b && b <= 0xf0 || b == 0xf3 {
+			if b <= 0x7f || 0xc2 <= b && b <= 0xf0 || b == 0xf3 {
 				prevCh, prevChLength = utf8.DecodeRuneInString(ctx.Str[i:])
 				break
 			}
