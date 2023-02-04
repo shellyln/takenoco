@@ -1,6 +1,7 @@
 package formula_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -23,12 +24,16 @@ func runMatrixParse(t *testing.T, tests []testMatrixItem) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := formula.Parse(tt.args.s)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Parse() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("%v: Parse() error = %v, wantErr %v", tt.name, err, tt.wantErr)
+				return
+			}
+			if err != nil {
+				fmt.Println(err.Error())
 				return
 			}
 
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Parse() = %v, want %v", got, tt.want)
+				t.Errorf("%v: Parse() = %v, want %v", tt.name, got, tt.want)
 			}
 		})
 	}
@@ -95,6 +100,10 @@ func TestParse(t *testing.T) {
 		args:    args{s: "-7+-(1*2+3)*-(4-5*6)"},
 		want:    -137,
 		wantErr: false,
+	}, {
+		name:    "8a",
+		args:    args{s: "-7+-(1*2+a3)*-(4-5*6)"},
+		wantErr: true,
 	}}
 
 	runMatrixParse(t, tests)

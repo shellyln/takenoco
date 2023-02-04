@@ -1,5 +1,10 @@
 # Changelog
 
+# v0.0.10
+* (Breaking change) Change `base.GetLineAndColPosition` parameters.
+  * Add `tabSize` parameter
+* Improve formula example.
+
 # v0.0.9
 * Fix `string.HexNumber`
 * Add TODO comments.

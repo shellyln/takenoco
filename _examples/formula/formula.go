@@ -146,12 +146,24 @@ func program() ParserFn {
 func Parse(s string) (int64, error) {
 	out, err := rootParser(*NewStringParserContext(s))
 	if err != nil {
-		return 0, errors.New(err.Error() + " (Position: " + strconv.Itoa(out.SourcePosition.Position) + ")")
+		pos := GetLineAndColPosition(s, out.SourcePosition, 4)
+		return 0, errors.New(
+			err.Error() +
+				"\n --> Line " + strconv.Itoa(pos.Line) +
+				", Col " + strconv.Itoa(pos.Col) + "\n" +
+				pos.ErrSource,
+		)
 	}
 
 	if out.MatchStatus == MatchStatus_Matched {
 		return out.AstStack[0].Value.(int64), nil
 	} else {
-		return 0, errors.New("Parse failed (Position: " + strconv.Itoa(out.SourcePosition.Position) + ")")
+		pos := GetLineAndColPosition(s, out.SourcePosition, 4)
+		return 0, errors.New(
+			"Parse failed" +
+				"\n --> Line " + strconv.Itoa(pos.Line) +
+				", Col " + strconv.Itoa(pos.Col) + "\n" +
+				pos.ErrSource)
+
 	}
 }

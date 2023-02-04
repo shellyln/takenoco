@@ -4,12 +4,12 @@ import (
 	"strings"
 )
 
-//
-func GetLineAndColPosition(src string, pos SourcePosition) LineAndColPosition {
+func GetLineAndColPosition(src string, pos SourcePosition, tabSize int) LineAndColPosition {
 	prevLineIndex := 0
 	lineIndex := 0
 	line := 1
 	col := 1
+	nTabs := 0
 
 	for i := 0; i < pos.Position; i++ {
 		switch src[i] {
@@ -20,12 +20,17 @@ func GetLineAndColPosition(src string, pos SourcePosition) LineAndColPosition {
 			}
 			prevLineIndex = lineIndex
 			lineIndex = i + 1
+			nTabs = 0
 			col = 1
 		case '\n':
 			line++
 			prevLineIndex = lineIndex
 			lineIndex = i + 1
+			nTabs = 0
 			col = 1
+		case '\t':
+			nTabs++
+			col++
 		default:
 			col++
 		}
@@ -43,12 +48,14 @@ OUTER:
 		}
 	}
 
-	errGuideCol := col - 1
+	errGuideCol := col - 1 + nTabs*(tabSize-1)
 	if errGuideCol < 0 {
 		errGuideCol = 0
 	}
 
 	errSource := src[prevLineIndex:endIndex]
+	errSource = strings.ReplaceAll(errSource, "\t", strings.Repeat(" ", tabSize))
+
 	if strings.Contains(errSource, "\n") {
 		errSource = "   | " + strings.Replace(errSource, "\n", "\n > | ", 1) + "\n"
 	} else if strings.Contains(errSource, "\r") {
