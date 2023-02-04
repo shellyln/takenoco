@@ -257,6 +257,10 @@ func UnicodeWordBoundary() ParserFn {
 		var prevChLength int
 		for i := ctx.Position - 1; 0 <= i; i-- {
 			b := ctx.Str[i]
+
+			// TODO: BUG: Valid range is `b <= 0x7f || 0xc2 <= b && b <= 0xf4`
+			// https://github.com/golang/go/blob/0a86cd6857b9fb12a798b3dbcfb6974384aa07d6/src/unicode/utf8/utf8.go#L65-L84
+
 			if b <= 0x7f || 0xc2 <= b && b <= 0xf0 || b == 0xf3 {
 				prevCh, prevChLength = utf8.DecodeRuneInString(ctx.Str[i:])
 				break
