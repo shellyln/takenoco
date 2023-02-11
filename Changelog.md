@@ -1,5 +1,9 @@
 # Changelog
 
+# v0.0.11
+* Added `Date`, `DateTime`, `Time` parsers to the `extra` package.
+* Fix README.
+
 # v0.0.10
 * (Breaking change) Change `base.GetLineAndColPosition` parameters.
   * Add `tabSize` parameter
