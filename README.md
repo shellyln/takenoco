@@ -18,6 +18,8 @@ A framework for making easy use of parser combinators and production rules.
 * [CSV parser](https://github.com/shellyln/takenoco/tree/master/_examples/csv)
 * [Formula parser](https://github.com/shellyln/takenoco/tree/master/_examples/formula)
 * [Loose JSON + TOML parsers](https://github.com/shellyln/go-loose-json-parser)
+    * [JSON parser](https://github.com/shellyln/go-loose-json-parser/blob/master/jsonlp/json.go)
+    * [TOML parser](https://github.com/shellyln/go-loose-json-parser/blob/master/jsonlp/toml.go)
     * [Live demo (Loose JSON | TOML normalizer)](https://shellyln.github.io/jsonlp/)
 * [Dust - toy scripting language](https://github.com/shellyln/dust-lang)
     * [Parsers](https://github.com/shellyln/dust-lang/tree/master/scripting/parser)
