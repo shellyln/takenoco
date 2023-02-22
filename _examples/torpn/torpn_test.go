@@ -80,6 +80,11 @@ func TestParse(t *testing.T) {
 		args:    args{s: "(3+5)*(7+11)"},
 		want:    []interface{}{int64(3), int64(5), "+", int64(7), int64(11), "+", "*"},
 		wantErr: false,
+	}, {
+		name:    "8",
+		args:    args{s: "13"},
+		want:    []interface{}{int64(13)},
+		wantErr: false,
 	}}
 
 	runMatrixParse(t, tests)

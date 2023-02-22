@@ -155,18 +155,19 @@ func Parse(s string) ([]interface{}, error) {
 	}
 
 	if out.MatchStatus == MatchStatus_Matched {
-		var result AstSlice
 		switch out.AstStack[0].Type {
 		case AstType_Int:
-			result = AstSlice{out.AstStack[0].Value.(Ast)}
+			return []interface{}{out.AstStack[0].Value.(int64)}, nil
 		case AstType_ListOfAst:
-			result = out.AstStack[0].Value.(AstSlice)
+			result := out.AstStack[0].Value.(AstSlice)
+			ret := make([]interface{}, 0, len(result))
+			for _, v := range result {
+				ret = append(ret, v.Value)
+			}
+			return ret, nil
+		default:
+			return nil, errors.New("Unexpected: no result")
 		}
-		ret := make([]interface{}, 0, len(result))
-		for _, v := range result {
-			ret = append(ret, v.Value)
-		}
-		return ret, nil
 	} else {
 		pos := GetLineAndColPosition(s, out.SourcePosition, 4)
 		return nil, errors.New(
