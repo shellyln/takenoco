@@ -1,5 +1,10 @@
 # Changelog
 
+# v0.0.12
+* Added Formula-to-RPN example.
+* Edit Makefile.
+* Edit README.
+
 # v0.0.11
 * Added `Date`, `DateTime`, `Time` parsers to the `extra` package.
 * Fix README.
