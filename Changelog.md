@@ -1,5 +1,8 @@
 # Changelog
 
+# v0.0.13
+* Fix Formula-to-RPN example.
+
 # v0.0.12
 * Added Formula-to-RPN example.
 * Edit Makefile.
