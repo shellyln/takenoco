@@ -17,6 +17,7 @@ A framework for making easy use of parser combinators and production rules.
 
 * [CSV parser](https://github.com/shellyln/takenoco/tree/master/_examples/csv)
 * [Formula parser](https://github.com/shellyln/takenoco/tree/master/_examples/formula)
+* [Formula to RPN converter](https://github.com/shellyln/takenoco/tree/master/_examples/torpn)
 * [Loose JSON + TOML parsers](https://github.com/shellyln/go-loose-json-parser)
     * [JSON parser](https://github.com/shellyln/go-loose-json-parser/blob/master/jsonlp/json.go)
     * [TOML parser](https://github.com/shellyln/go-loose-json-parser/blob/master/jsonlp/toml.go)
