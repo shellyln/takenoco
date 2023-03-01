@@ -16,7 +16,7 @@ A framework for making easy use of parser combinators and production rules.
 
 ### Introduction to takenoco, a parser combinator library for Go
 * [English](https://github.com/shellyln/takenoco/blob/master/_docs/introduction.md)
-* [日本語](https://zenn.dev/shellyln/articles/a460f81fb7e1df)
+* [日本語 (external link)](https://zenn.dev/shellyln/articles/a460f81fb7e1df)
 
 
 ## 👋 Examples
