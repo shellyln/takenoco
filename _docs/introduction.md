@@ -513,7 +513,7 @@ The `Value` type is a slice of the AST struct.
 ```go
 func ToSlice(ctx ParserContext, asts AstSlice) (AstSlice, error)
 ```
-For each AST structures in the parsed result, get the `Value` of each and make it into a slice.
+For each AST structs in the parsed result, get the `Value` of each and make it into a slice.
 The type will be the same as the source passed in `NewObjectParserContext(slice)`.  
 Does not work with string parsers.
 
