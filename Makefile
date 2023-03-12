@@ -176,6 +176,7 @@ buildlib:
 	$(GOBUILD) \
 	    -a -tags osusergo,netgo -installsuffix netgo \
 	    -trimpath \
+	    -buildvcs=false \
 	    -buildmode=c-archive \
 	    $(LDFLAGS) \
 	    -o $(BIN_LIB) $(TARGET_LIB)
@@ -184,6 +185,7 @@ builddylib:
 	$(GOBUILD) \
 	    -a -tags osusergo,netgo -installsuffix netgo \
 	    -trimpath \
+	    -buildvcs=false \
 	    -buildmode=c-shared \
 	    $(LDFLAGS_SHARED) \
 	    -o $(BIN_SO) $(TARGET_LIB)
@@ -196,6 +198,7 @@ wasm:
 	$(GOBUILD) \
 	    -a -tags wasm \
 	    -trimpath \
+	    -buildvcs=false \
 	    $(LDFLAGS) \
 	    -o $(BIN_WASM) $(TARGET_WASM)
 

@@ -213,6 +213,13 @@ func main() {
 
 ## 📦 Build the example app
 
+#### Prerequirements:
+
+```bash
+go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
+go install honnef.co/go/tools/cmd/staticcheck@latest
+```
+
 #### 🪟 Windows prerequirements:
 
 ```bash
