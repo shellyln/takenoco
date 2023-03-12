@@ -19,7 +19,7 @@ A framework for making easy use of parser combinators and production rules.
 * [日本語 (external link)](https://zenn.dev/shellyln/articles/a460f81fb7e1df)
 
 
-## 👋 Examples
+## 🧭 Examples
 
 * [CSV parser](https://github.com/shellyln/takenoco/tree/master/_examples/csv)
 * [Formula parser](https://github.com/shellyln/takenoco/tree/master/_examples/formula)
@@ -213,13 +213,6 @@ func main() {
 
 ## 📦 Build the example app
 
-#### Prerequirements:
-
-```bash
-go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
-go install honnef.co/go/tools/cmd/staticcheck@latest
-```
-
 #### 🪟 Windows prerequirements:
 
 ```bash
@@ -267,6 +260,16 @@ scoop install binaryen
 
 ```bash
 make tinywasm
+```
+
+
+## 🧩 Contributing
+
+#### Prerequirements:
+
+```bash
+go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
+go install honnef.co/go/tools/cmd/staticcheck@latest
 ```
 
 
