@@ -210,6 +210,7 @@ tinywasm:
 	$(TINYGOCMD) build \
 	    -tags wasm \
 	    -no-debug \
+	    -stack-size 512kB \
 	    -o $(BIN_WASM) $(TARGET_WASM)
 
 
