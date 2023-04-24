@@ -31,6 +31,9 @@ A framework for making easy use of parser combinators and production rules.
 * [Dust - toy scripting language](https://github.com/shellyln/dust-lang)
     * [Parsers](https://github.com/shellyln/dust-lang/tree/master/scripting/parser)
     * [Production rules](https://github.com/shellyln/dust-lang/tree/master/scripting/rules)
+* [OpenSOQL parser](https://github.com/shellyln/go-open-soql-parser)
+    * [Parser](https://github.com/shellyln/go-open-soql-parser/blob/master/soql/parser/parser.go)
+    * [Live demo](https://shellyln.github.io/soql/)
 
 
 ## 🚀 Getting started
